@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerScript : TankScript {
     private Vector3 movement;
     public float speed = 0.1f;
     public float rotationSpeed = 1;

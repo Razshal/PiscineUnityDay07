@@ -37,9 +37,8 @@ public class CanonScript : MonoBehaviour {
     {
         CanonFireEffect(null);
         if (Physics.Raycast(transform.position, -transform.right, out raycastHit, fireRange))
-        {
             Instantiate(missileParticle, raycastHit.point, transform.rotation);
-        }
+        missiles--;
     }
 
 	private void Start()
@@ -59,7 +58,7 @@ public class CanonScript : MonoBehaviour {
         else if (Input.GetMouseButtonUp(0))
             CancelInvoke("FireRotary");
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && missiles > 0)
             FireMissile();
 	}
 }
