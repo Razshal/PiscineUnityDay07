@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanonScript : MonoBehaviour {
     public float rotationSpeed = 1;
@@ -18,7 +19,7 @@ public class CanonScript : MonoBehaviour {
     private Vector3 direction;
     private RaycastHit raycastHit;
     private AudioSource audioSource;
-
+    public Image cursor;
 
     private void CanonFireEffect(AudioClip clip)
     {
@@ -35,7 +36,30 @@ public class CanonScript : MonoBehaviour {
         {
             Instantiate(rotaryParticle, raycastHit.point, transform.rotation);
             if (raycastHit.collider.gameObject.CompareTag("Tanks"))
-                raycastHit.collider.gameObject.GetComponent<TankScript>().GetDamages(gunDamages);
+            {
+				raycastHit.collider.gameObject.GetComponent<TankScript>().GetDamages(gunDamages);
+                if (isPlayerCanon)
+                    cursor.color = Color.red;
+            }
+        }
+    }
+    // TODO : refacto these two for less code repeat
+    public void FireMissile()
+    {
+        if (missiles > 0)
+        {
+            CanonFireEffect(null);
+            if (Physics.Raycast(transform.position, -transform.right, out raycastHit, fireRange))
+            {
+                Instantiate(missileParticle, raycastHit.point, transform.rotation);
+                if (raycastHit.collider.gameObject.CompareTag("Tanks"))
+                {
+                    raycastHit.collider.gameObject.GetComponent<TankScript>().GetDamages(missileDamages);
+                    if (isPlayerCanon)
+                        cursor.color = Color.red;
+                }
+            }
+            missiles--;
         }
     }
 
@@ -49,21 +73,6 @@ public class CanonScript : MonoBehaviour {
     {
         CancelInvoke("FireRotary");
         isFiring = false;
-    }
-
-    public void FireMissile()
-    {
-        if (missiles > 0)
-        {
-            CanonFireEffect(null);
-            if (Physics.Raycast(transform.position, -transform.right, out raycastHit, fireRange))
-            {
-                Instantiate(missileParticle, raycastHit.point, transform.rotation);
-                if (raycastHit.collider.gameObject.CompareTag("Tanks"))
-                    raycastHit.collider.gameObject.GetComponent<TankScript>().GetDamages(missileDamages);
-            }
-            missiles--;
-        }
     }
 
 	private void Start()
@@ -88,6 +97,8 @@ public class CanonScript : MonoBehaviour {
 
             if (Input.GetMouseButtonDown(1))
                 FireMissile();
+            if (isPlayerCanon)
+                cursor.color = Color.white;
         }
 	}
 }

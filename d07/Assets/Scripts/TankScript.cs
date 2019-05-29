@@ -5,16 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class TankScript : MonoBehaviour
 {
-    public int life = 400;
-    public AudioSource audioSource;
+    public int life;
+    public int maxLife = 400;
+    private AudioSource audioSource;
     public bool isPlayer = false;
     public GameObject explosion;
+    private CameraScript cameraScript;
 
     public void GetDamages(int damages)
     {
         life -= damages;
         if (life > 0 && life - damages <= 0)
         {
+            if (isPlayer && life < maxLife / 2)
+                cameraScript.PanicMusic();
             audioSource.Play();
             explosion.SetActive(true);
             if (!isPlayer)
@@ -28,5 +32,7 @@ public class TankScript : MonoBehaviour
     protected void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
+        cameraScript = Camera.main.GetComponent<CameraScript>();
+        life = maxLife;
     }
 }

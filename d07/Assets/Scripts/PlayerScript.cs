@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : TankScript
 {
@@ -11,6 +12,9 @@ public class PlayerScript : TankScript
     public float boostTime;
     public float maxBoostTime = 3;
     public bool canBoost = true;
+    public Text TextLife;
+    public Text missileText;
+    public CanonScript canon;
 
     // Use this for initialization
     new void Start()
@@ -39,5 +43,9 @@ public class PlayerScript : TankScript
             canBoost = true;
         if (boostTime <= 0)
             canBoost = false;
+
+        TextLife.text = life + "/" + maxLife;
+        missileText.text = "" + canon.missiles;
+
     }
 }

@@ -133,6 +133,7 @@ public class EnemyScript : TankScript
         if (actionChangeTimer <= 0 && life > 0)
         {
             state = (State)UnityEngine.Random.Range(0, 4);
+            delayBeforeActionChange = UnityEngine.Random.Range(1, 3);
             actionChangeTimer = delayBeforeActionChange;
         }
     }
