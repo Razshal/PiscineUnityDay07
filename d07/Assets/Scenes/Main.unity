@@ -190,6 +190,18 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 4367593295901688, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367593295901688, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367593295901688, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
   m_IsPrefabParent: 0
