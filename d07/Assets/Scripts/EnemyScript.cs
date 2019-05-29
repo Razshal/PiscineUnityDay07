@@ -14,7 +14,7 @@ public class EnemyScript : TankScript
     public GameObject closestTarget;
     private float actionChangeTimer;
     private float delayBeforeActionChange = 2;
-    public float enemyProximity = 2;
+    private float enemyProximity = 1;
 
     public enum State
     {
@@ -56,6 +56,7 @@ public class EnemyScript : TankScript
         }
         closestTarget = GetClosestTarget();
         actionChangeTimer = delayBeforeActionChange;
+        closestTarget = GetClosestTarget();
     }
 
     private bool IsAtOptimalHeight()
@@ -67,46 +68,58 @@ public class EnemyScript : TankScript
     {
         // Acquire target if there are no
         if (!closestTarget && tanks.Count > 0)
+        {
+            tanks.Remove(closestTarget);
             closestTarget = GetClosestTarget();
-        
-        // Set travel to a safe distance from target
-        if (Vector3.Distance(transform.position, closestTarget.transform.position) 
-            > canon.fireRange / enemyProximity)
-        {
-            canon.StopRotary();
-            navMeshAgent.SetDestination(closestTarget.transform.position);
-            navMeshAgent.isStopped = false;
         }
-        else if (closestTarget)
+
+        if (life <= 0)
         {
-            targetPos = transform.position - closestTarget.transform.position;
-            targetPos.y = 0;
-            transform.rotation = Quaternion.LookRotation(-targetPos);
             navMeshAgent.isStopped = true;
+            state = State.NOTHING;
+        }
 
-            // Randomly picks between these actions
-            if (state == State.NOTHING && IsAtOptimalHeight())
+        if (closestTarget && life > 0)
+        {
+            // Set travel to a safe distance from target
+            if (Vector3.Distance(transform.position, closestTarget.transform.position)
+                > canon.fireRange / enemyProximity)
             {
-                if (canon.isFiring)
-                    canon.StopRotary();
+                canon.StopRotary();
+                navMeshAgent.SetDestination(closestTarget.transform.position);
+                navMeshAgent.isStopped = false;
             }
-            else if (state == State.MISSILE && IsAtOptimalHeight())
+            else
             {
-                canon.FireMissile();
-                state = State.GUN;
-            }
-            else if (!canon.isFiring && state == State.GUN)
-                canon.StartRotary();
+                targetPos = transform.position - closestTarget.transform.position;
+                targetPos.y = 0;
+                transform.rotation = Quaternion.LookRotation(-targetPos);
+                navMeshAgent.isStopped = true;
 
-            if (!IsAtOptimalHeight())
-                enemyProximity *= 1.5f;
+                // Randomly picks between these actions
+                if (state == State.NOTHING && IsAtOptimalHeight())
+                {
+                    if (canon.isFiring)
+                        canon.StopRotary();
+                }
+                else if (state == State.MISSILE && IsAtOptimalHeight())
+                {
+                    canon.FireMissile();
+                    state = State.GUN;
+                }
+                else if (!canon.isFiring && state == State.GUN)
+                    canon.StartRotary();
+
+                if (!IsAtOptimalHeight())
+                    enemyProximity *= 1.2f;
+            }
         }
     }
 
     void Update()
     {
         actionChangeTimer -= Time.deltaTime;
-        if (actionChangeTimer <= 0)
+        if (actionChangeTimer <= 0 && life > 0)
         {
             state = (State)UnityEngine.Random.Range(0, 3);
             actionChangeTimer = delayBeforeActionChange;

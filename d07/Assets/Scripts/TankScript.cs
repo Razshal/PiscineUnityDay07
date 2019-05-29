@@ -8,6 +8,7 @@ public class TankScript : MonoBehaviour
     public int life = 400;
     public AudioSource audioSource;
     public bool isPlayer = false;
+    public GameObject explosion;
 
     public void GetDamages(int damages)
     {
@@ -15,6 +16,7 @@ public class TankScript : MonoBehaviour
         if (life > 0 && life - damages <= 0)
         {
             audioSource.Play();
+            explosion.SetActive(true);
             if (!isPlayer)
                 Destroy(gameObject, 2f);
             else

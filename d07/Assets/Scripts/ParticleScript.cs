@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class ParticleScript : MonoBehaviour {
 	void Start () {
-        Destroy(gameObject, 1);
+        Destroy(gameObject, 0.5f);
 	}
 }
