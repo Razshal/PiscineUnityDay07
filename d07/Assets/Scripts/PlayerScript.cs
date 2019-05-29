@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScript : TankScript {
+public class PlayerScript : TankScript
+{
     private Vector3 movement;
     public float speed = 0.1f;
     public float rotationSpeed = 1;
@@ -11,22 +12,23 @@ public class PlayerScript : TankScript {
     public float maxBoostTime = 3;
     public bool canBoost = true;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         Cursor.lockState = CursorLockMode.Locked;
         boostTime = 3;
-	}
+    }
 
-	private void FixedUpdate()
-	{
+    private void FixedUpdate()
+    {
         movement = new Vector3(-Input.GetAxis("Vertical"), 0, 0) * speed * (canBoost ? boostMultiplier : 1);
         gameObject.transform.Translate(movement);
 
         transform.Rotate(0, Input.GetAxis("Horizontal"), 0);
-	}
+    }
 
-	private void Update()
-	{
+    private void Update()
+    {
         // Boost handling
         if (Input.GetKey(KeyCode.LeftShift) && boostTime > 0)
             boostTime -= Time.deltaTime;
@@ -36,5 +38,5 @@ public class PlayerScript : TankScript {
             canBoost = true;
         if (boostTime <= 0)
             canBoost = false;
-	}
+    }
 }
