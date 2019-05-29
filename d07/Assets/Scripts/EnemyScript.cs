@@ -20,7 +20,8 @@ public class EnemyScript : TankScript
     {
         GUN,
         MISSILE,
-        NOTHING
+        NOTHING,
+        MISSING
     }
     public State state = State.NOTHING;
 
@@ -93,24 +94,34 @@ public class EnemyScript : TankScript
             {
                 targetPos = transform.position - closestTarget.transform.position;
                 targetPos.y = 0;
+                if (state != State.MISSING)
+                    targetPos = transform.position - closestTarget.transform.position;
+                else
+                    targetPos = transform.position - closestTarget.transform.position + transform.right * 3;
                 transform.rotation = Quaternion.LookRotation(-targetPos);
                 navMeshAgent.isStopped = true;
 
                 // Randomly picks between these actions
-                if (state == State.NOTHING && IsAtOptimalHeight())
+                if (IsAtOptimalHeight())
                 {
-                    if (canon.isFiring)
-                        canon.StopRotary();
+                    if (state == State.NOTHING)
+                    {
+                        if (canon.isFiring)
+                            canon.StopRotary();
+                    }
+                    else if (state == State.MISSILE && IsAtOptimalHeight())
+                    {
+                        canon.FireMissile();
+                        state = State.GUN;
+                    }
+                    // Reset safe distance
+                    enemyProximity = 1;
                 }
-                else if (state == State.MISSILE && IsAtOptimalHeight())
-                {
-                    canon.FireMissile();
-                    state = State.GUN;
-                }
-                else if (!canon.isFiring && state == State.GUN)
+                if (!canon.isFiring && (state == State.GUN || state == State.MISSING))
                     canon.StartRotary();
 
-                if (!IsAtOptimalHeight())
+                // Reduce distance between enemy if he cannot be shooted
+                if (!IsAtOptimalHeight() && enemyProximity < 8)
                     enemyProximity *= 1.2f;
             }
         }
@@ -121,7 +132,7 @@ public class EnemyScript : TankScript
         actionChangeTimer -= Time.deltaTime;
         if (actionChangeTimer <= 0 && life > 0)
         {
-            state = (State)UnityEngine.Random.Range(0, 3);
+            state = (State)UnityEngine.Random.Range(0, 4);
             actionChangeTimer = delayBeforeActionChange;
         }
     }
