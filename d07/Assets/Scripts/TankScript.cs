@@ -15,10 +15,10 @@ public class TankScript : MonoBehaviour
     public void GetDamages(int damages)
     {
         life -= damages;
-        if (life > 0 && life - damages <= 0)
+        if (isPlayer && life <= (maxLife / 2))
+            cameraScript.PanicMusic();
+        if (life >= 0 && life - damages <= 0)
         {
-            if (isPlayer && life < maxLife / 2)
-                cameraScript.PanicMusic();
             audioSource.Play();
             explosion.SetActive(true);
             if (!isPlayer)

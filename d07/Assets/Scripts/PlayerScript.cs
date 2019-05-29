@@ -47,5 +47,7 @@ public class PlayerScript : TankScript
         TextLife.text = life + "/" + maxLife;
         missileText.text = "" + canon.missiles;
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
     }
 }
