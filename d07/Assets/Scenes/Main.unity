@@ -126,7 +126,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4367593295901688, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 100.47
+      value: 100.04
       objectReference: {fileID: 0}
     - target: {fileID: 4367593295901688, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -152,54 +152,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 223805459846409994, guid: ccbfe9039a2fd43aa94997b12566acf1,
+    - target: {fileID: 82994567353147396, guid: ccbfe9039a2fd43aa94997b12566acf1,
         type: 2}
-      propertyPath: m_Camera
-      value: 
+      propertyPath: MinDistance
+      value: 21.820755
       objectReference: {fileID: 0}
-    - target: {fileID: 1561631258172102, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
-      propertyPath: m_TagString
-      value: Tanks
-      objectReference: {fileID: 0}
-    - target: {fileID: 82552828890042906, guid: ccbfe9039a2fd43aa94997b12566acf1,
+    - target: {fileID: 82994567353147396, guid: ccbfe9039a2fd43aa94997b12566acf1,
         type: 2}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4171200524667122, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4171200524667122, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4171200524667122, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4303501547690804, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4303501547690804, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4303501547690804, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4367593295901688, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4367593295901688, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4367593295901688, guid: ccbfe9039a2fd43aa94997b12566acf1, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
+      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -232,6 +192,8 @@ MonoBehaviour:
     type: 2}
   canonParticle: {fileID: 1641836995}
   gunShoot: {fileID: 8300000, guid: 38ba946f2eace4f6780dcad68c26581f, type: 3}
+  gunDamages: 10
+  missileDamages: 100
   fireRange: 100
   missiles: 10
   rotaryFireRate: 0.1
@@ -382,23 +344,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &444107443 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1561631258172102, guid: ccbfe9039a2fd43aa94997b12566acf1,
-    type: 2}
-  m_PrefabInternal: {fileID: 159125856}
---- !u!114 &444107444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 444107443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f1f38647e08943d99dada1de41c7ee8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  closestTarget: {fileID: 0}
 --- !u!1001 &578692380
 Prefab:
   m_ObjectHideFlags: 0
@@ -482,6 +427,16 @@ Prefab:
     - target: {fileID: 1960475737002742, guid: 855b60f69fab74b54871552d69e8c509, type: 2}
       propertyPath: m_TagString
       value: Tanks
+      objectReference: {fileID: 0}
+    - target: {fileID: 114224384555617324, guid: 855b60f69fab74b54871552d69e8c509,
+        type: 2}
+      propertyPath: life
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 114224384555617324, guid: 855b60f69fab74b54871552d69e8c509,
+        type: 2}
+      propertyPath: isPlayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 855b60f69fab74b54871552d69e8c509, type: 2}

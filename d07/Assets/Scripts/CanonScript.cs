@@ -8,6 +8,8 @@ public class CanonScript : MonoBehaviour {
     public GameObject missileParticle;
     public GameObject canonParticle;
     public AudioClip gunShoot;
+    public int gunDamages = 1;
+    public int missileDamages = 10;
     public int fireRange = 20;
     public int missiles = 10;
     public float rotaryFireRate = 0.1f;
@@ -32,6 +34,8 @@ public class CanonScript : MonoBehaviour {
         if (Physics.Raycast(transform.position, -transform.right, out raycastHit, fireRange))
         {
             Instantiate(rotaryParticle, raycastHit.point, transform.rotation);
+            if (raycastHit.collider.gameObject.CompareTag("Tanks"))
+                raycastHit.collider.gameObject.GetComponent<TankScript>().GetDamages(gunDamages);
         }
     }
 
@@ -49,10 +53,17 @@ public class CanonScript : MonoBehaviour {
 
     public void FireMissile()
     {
-        CanonFireEffect(null);
-        if (Physics.Raycast(transform.position, -transform.right, out raycastHit, fireRange))
-            Instantiate(missileParticle, raycastHit.point, transform.rotation);
-        missiles--;
+        if (missiles > 0)
+        {
+            CanonFireEffect(null);
+            if (Physics.Raycast(transform.position, -transform.right, out raycastHit, fireRange))
+            {
+                Instantiate(missileParticle, raycastHit.point, transform.rotation);
+                if (raycastHit.collider.gameObject.CompareTag("Tanks"))
+                    raycastHit.collider.gameObject.GetComponent<TankScript>().GetDamages(missileDamages);
+            }
+            missiles--;
+        }
     }
 
 	private void Start()
@@ -75,7 +86,7 @@ public class CanonScript : MonoBehaviour {
             else if (Input.GetMouseButtonUp(0))
                 StopRotary();
 
-            if (Input.GetMouseButtonDown(1) && missiles > 0)
+            if (Input.GetMouseButtonDown(1))
                 FireMissile();
         }
 	}

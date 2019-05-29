@@ -13,8 +13,9 @@ public class PlayerScript : TankScript
     public bool canBoost = true;
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
+        base.Start();
         Cursor.lockState = CursorLockMode.Locked;
         boostTime = 3;
     }
