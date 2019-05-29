@@ -14,12 +14,12 @@ public class CameraScript : MonoBehaviour {
 	
     public void PanicMusic()
     {
-        if (!panic)
+        if (panic == false)
         {
             audioSource.Stop();
             audioSource.clip = panicMusic;
             audioSource.Play();
-			panic = true;
+            panic = true;
         }
     }
 }

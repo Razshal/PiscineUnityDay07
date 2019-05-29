@@ -1053,6 +1053,11 @@ Prefab:
       propertyPath: missileText
       value: 
       objectReference: {fileID: 687048959}
+    - target: {fileID: 114224384555617324, guid: 855b60f69fab74b54871552d69e8c509,
+        type: 2}
+      propertyPath: maxLife
+      value: 200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 855b60f69fab74b54871552d69e8c509, type: 2}
   m_IsPrefabParent: 0
