@@ -36,6 +36,8 @@ public class EnemyScript : TankScript
         foreach (GameObject tank in tanks)
         {
             targetDistance = Vector3.Distance(transform.position, target.transform.position);
+            if (tank == null)
+                return null;
             tankDistance = Vector3.Distance(transform.position, tank.transform.position);
 
             if (tankDistance < targetDistance)

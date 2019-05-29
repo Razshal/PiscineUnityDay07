@@ -11,18 +11,24 @@ public class TankScript : MonoBehaviour
     public bool isPlayer = false;
     public GameObject explosion;
     private CameraScript cameraScript;
+    private bool canTakeDamages = true;
 
     public void GetDamages(int damages)
     {
+        if (gameObject == null || !canTakeDamages)
+            return;
         life -= damages;
         if (isPlayer && life <= (maxLife / 2))
             cameraScript.PanicMusic();
-        if (life >= 0 && life - damages <= 0)
+        if (life <= 0 && life - damages <= 0)
         {
             audioSource.Play();
             explosion.SetActive(true);
             if (!isPlayer)
-                Destroy(gameObject, 2f);
+            {
+                Destroy(gameObject, 1f);
+                canTakeDamages = false;
+            }
             else
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
