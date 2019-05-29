@@ -136,10 +136,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 1
   rotaryParticle: {fileID: 161966, guid: ca77c5f38c75a42ccac6cc3bb518a186, type: 2}
-  missileParticle: {fileID: 1641836995}
+  missileParticle: {fileID: 1413757737211752, guid: 453387de1f32a4ef48cbd957826b1f12,
+    type: 2}
   canonParticle: {fileID: 1641836995}
   gunShoot: {fileID: 8300000, guid: 38ba946f2eace4f6780dcad68c26581f, type: 3}
+  missileShoot: {fileID: 8300000, guid: 38ba946f2eace4f6780dcad68c26581f, type: 3}
   fireRange: 100
+  missiles: 10
   rotaryFireRate: 0.1
 --- !u!82 &241657485
 AudioSource:

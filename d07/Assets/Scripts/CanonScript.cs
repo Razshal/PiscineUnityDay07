@@ -9,24 +9,36 @@ public class CanonScript : MonoBehaviour {
     public GameObject canonParticle;
     public AudioClip gunShoot;
     public int fireRange = 100;
+    public int missiles = 10;
     public float rotaryFireRate = 0.1f;
     private Vector3 direction;
     private RaycastHit raycastHit;
     private AudioSource audioSource;
 
-    private void PlaySound(AudioClip clip)
-    {
-        audioSource.PlayOneShot(clip);
-    }
 
-    private void Fire()
+    private void CanonFireEffect(AudioClip clip)
     {
         canonParticle.SetActive(true);
         canonParticle.GetComponent<ParticleSystem>().time = 0;
-        PlaySound(gunShoot);
+        if (clip)
+            audioSource.PlayOneShot(clip);
+    }
+
+    private void FireRotary()
+    {
+        CanonFireEffect(gunShoot);
         if (Physics.Raycast(transform.position, -transform.right, out raycastHit, fireRange))
         {
             Instantiate(rotaryParticle, raycastHit.point, transform.rotation);
+        }
+    }
+
+    private void FireMissile()
+    {
+        CanonFireEffect(null);
+        if (Physics.Raycast(transform.position, -transform.right, out raycastHit, fireRange))
+        {
+            Instantiate(missileParticle, raycastHit.point, transform.rotation);
         }
     }
 
@@ -43,8 +55,11 @@ public class CanonScript : MonoBehaviour {
 	private void Update()
 	{
         if (Input.GetMouseButtonDown(0))
-            InvokeRepeating("Fire", 0, rotaryFireRate);
+            InvokeRepeating("FireRotary", 0, rotaryFireRate);
         else if (Input.GetMouseButtonUp(0))
-            CancelInvoke("Fire");
+            CancelInvoke("FireRotary");
+
+        if (Input.GetMouseButtonDown(1))
+            FireMissile();
 	}
 }
